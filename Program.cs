@@ -1,309 +1,184 @@
 ﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
+using System.Threading;
 //Bajutova Daria
 /* /////////////////////Условия:
- * Написать метод возвращающий минимальное из трех чисел;
-2. Написать метод подсчета количества цифр числа;
-3. С клавиатуры вводятся числа, пока не будет введен 0. Подсчитать сумму всех нечетных
-положительных чисел;
-4. Реализовать метод проверки логина и пароля. На вход подается логин и пароль. На выходе
-истина, если прошел авторизацию, и ложь, если не прошел. Используя метод проверки логина и
-пароля, написать программу: пользователь вводит логин и пароль, программа пропускает его
-дальше или не пропускает. С помощью цикла do while ограничить ввод пароля тремя попытками;
-5. а) Написать программу, которая запрашивает массу и рост человека, вычисляет его индекс
-массы и сообщает, нужно ли человеку похудеть, набрать вес или все в норме;
-б) *Рассчитать, на сколько кг похудеть или сколько кг набрать для нормализации веса.
-6. *Написать программу подсчета количества “Хороших” чисел в диапазоне от 1 до 1 000 000.
-Хорошим называется число, которое делится на сумму своих цифр. Реализовать подсчет
-времени выполнения программы, используя структуру DateTime.
-© geekbrains.ru 20
-7. a) Разработать рекурсивный метод, который выводит на экран числа от a до b;
-б) *Разработать рекурсивный метод, который считает сумму чисел от a до b.
-*
+ Написать программу «Анкета». Последовательно задаются вопросы (имя, фамилия, возраст, рост, вес). В результате вся информация выводится в одну строчку:
+а) используя  склеивание;
+	б) используя форматированный вывод;
+	в) используя вывод со знаком $.
+Ввести вес и рост человека. Рассчитать и вывести индекс массы тела (ИМТ) по формуле I=m/(h*h); где m — масса тела в килограммах, h — рост в метрах.
+
+
+а) Написать программу, которая подсчитывает расстояние между точками с координатами x1, y1 и x2,y2 по формуле r=Math.Sqrt(Math.Pow(x2-x1,2)+Math.Pow(y2-y1,2). Вывести результат, используя спецификатор формата .2f (с двумя знаками после запятой);
+б) *Выполнить предыдущее задание, оформив вычисления расстояния между точками в виде метода.
+Написать программу обмена значениями двух переменных:
+а) с использованием третьей переменной;
+	б) *без использования третьей переменной.
+а) Написать программу, которая выводит на экран ваше имя, фамилию и город проживания.
+б) *Сделать задание, только вывод организовать в центре экрана.
+в) **Сделать задание б с использованием собственных методов (например, Print(string ms, int x,int y).
+*Создать класс с методами, которые могут пригодиться в вашей учебе (Print, Pause).
 */
-namespace Homework2
+namespace Homework1
 {
     class Program
     {
-        static int [] InputOfArray()
+        static void Anketa_vvod(out double height, out double weight, out string f_name, out string l_name)
         {
-            Console.WriteLine("Input of numbers");
-            int i = 0;
-            int[] array=new int [3];
-            while (i<3)
-            {
-                array[i] = Int32.Parse(Console.ReadLine());
-                i++;
-            }
-            i = 0;
-            Console.Write("Your numbers: ");
-            while (i < 3)
-            {
-                Console.Write(""+(i+1)+"). "+array[i]+"  ");
-                i++;
-
-            }
-            return array;
-            }
-        static int Find_Min(int[] array)
-        {
-            int min = array[0];
-            for(int i=1;i<array.Length;i++)
-            {
-                if (array[i] < min) min = array[i];
-            }
-            return min;
-        }
-        static int Length_Of_Number()
-        {
-            Console.WriteLine("Input your number");
-            string num = Console.ReadLine();
-            int count = 0;
-            try
-            {
-                if (Convert.ToDouble(num) != 0)
-                {
-                    foreach (char i in num)
-                
-                        if (i!=',')
-                            count++;
-                }
-            }
-            catch
-            {
-                Console.WriteLine("Are you not wrong?");
-            }
-            return count;
-        }
-        static double Input_While_Not_Zero()
-        {
-            double sum = 0;
-            Console.WriteLine("Input of numbers");
-            double i = 0;
-            try
-            {
-                while ((i = Convert.ToDouble(Console.ReadLine())) != 0)
-                    if (i > 0 && i % 2 != 0)
-                        sum += i;
-                return sum;
-            }
-            catch
-            {
-                Console.WriteLine("I'm frustraited((");
-                return -1;
-            }
-        }
-        static int Authorisation()
-        {
-            Console.WriteLine("Try to input the login and \\n password. (The login is \"LOGIN\", The password is \"PASSWORD\")");
-            int i = 0;
-            string login;
-            string password;
-            int key = 0;
-            try
-            {
-                do
-                {
-                    login = Console.ReadLine();
-                    password= Console.ReadLine();
-                    if (login == "LOGIN" && password == "PASSWORD")
-                    {
-                        key = 1;
-                        Console.WriteLine("okey, come in");
-                        return 1;
-                    }
-                    else
-                    {
-                        i++;
-                        Console.WriteLine($"no, its wrong, you can try {3-i} more times");    
-                    }
-                    
-                } while (key==0 && i < 3);
-
-                return 0;
-            }
-            catch
-            {
-                Console.WriteLine("I'm frustraited((");
-                return 0;
-            }
-        }
-        
-        static int Check_Login(string login)
-        {
-            try
-            {
-                login=Console.ReadLine();
-                return 1;
-            }
-            catch
-            {
-                return -1;
-            }
+            Console.WriteLine("Привет! Ваше имя: ");
+            f_name = Console.ReadLine();
+            Console.WriteLine("Фамилия:");
+            l_name = Console.ReadLine();
+            Console.WriteLine("Возраст: ");
+            int age = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Рост: ");
+            height = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Вес: ");
+            weight = Convert.ToDouble(Console.ReadLine());
+            // with format blocks
+            Console.WriteLine("Ваше имя:{0}, Фамилия: {1}, Возраст: {2}, Рост: {3}, Вес: {4}", f_name, l_name, age, height, weight);
+            //gluing
+            //Console.WriteLine("Ваше имя:" + f_name + ", Фамилия: " + l_name + ", Возраст: " + age + ", Рост: " + height + ", Вес: " + weight + "");
+            //$
+            //Console.WriteLine($"Ваше имя:{f_name}, Фамилия: {l_name}, Возраст: {age}, Рост: {height}, Вес: {weight}");
         }
         static double IMT(double height, double weight)
         {
-            return weight / Math.Pow(height, 2);
-        }
-        static void Chack_IMT()
-        {
-            int lower_limit_of_IMB = 20;
-            int upper_limit_of_IMB = 25;
-            try
+            while (height <= 0 || weight <= 0)
             {
                 Console.WriteLine("Рост: ");
-                double height = Convert.ToDouble(Console.ReadLine())/100f;
+                height = Convert.ToDouble(Console.ReadLine());
                 Console.WriteLine("Вес: ");
-                double weight = Convert.ToDouble(Console.ReadLine());
-                double imb = IMT(height, weight);
-                if (imb < 0)
-                    Console.WriteLine("I'm frustraited((");
-                else if (imb < lower_limit_of_IMB)
-                {
-                    Console.WriteLine("You are skinny and awersome");
-                    Console.WriteLine("{0, 5:#.##}", Math.Pow(height, 2) * (-imb + lower_limit_of_IMB));
-
-                }
-                else if (imb >= lower_limit_of_IMB && imb <= upper_limit_of_IMB)
-                    Console.WriteLine("You are awersome");
-                else if (imb > upper_limit_of_IMB)
-                {
-                    Console.WriteLine("You are not skinny but awersome");
-                    Console.WriteLine("{0, 5:#.##}", Math.Pow(height, 2) * (imb - upper_limit_of_IMB));
-                }
-
-                }
-            catch
-            {
-                Console.WriteLine("I'm frustraited((");
+                weight = Convert.ToDouble(Console.ReadLine());
             }
-            }
-        static void Good_Numbers_From_Million()
-        {
-            int upper_limit = 1000;
-            int sum = 0;
-            int j = 0;
-            int key = 0;
-
-            for (int i = 1; i < upper_limit; i++)
-            {
-                j = i;
-                do
-                {
-                    sum += j % 10;
-                    j /= 10;
-                } while (j != 0);
-                if (i % sum == 0)
-                {
-                    Console.Write("{0} ", i);
-                    key++;
-                    if (key >= 30)
-                    {
-                        Console.Write("\n");
-                        key = 0;
-                    }
-                }
-                sum = 0;
-
-            }
+            height /= 100f;
+            return weight / Math.Pow(height, 2);
         }
-        static void Output(int bottom, int top)
+        static double dist()
         {
-                Console.Write("{0} ", bottom);
-                if (bottom+1 <=top)
-                    Output(bottom + 1, top);
+            Console.WriteLine("First point\nX: ");
+            double x1 = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Y: ");
+            double y1 = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Second point\nX: ");
+            double x2 = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Y: ");
+            double y2 = Convert.ToDouble(Console.ReadLine());
+            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+
         }
-        static int Sum(int bottom, int top, int sum)
+        static void changing()
         {
-            if (bottom + 1 <= top)
+            int one = 0, two = 0;
+            Console.WriteLine("Input of numbers\nX: ");
+            one = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Y: ");
+            two = Convert.ToInt32(Console.ReadLine());
+            int three = one;
+            one = two;
+            two = three;
+            Console.WriteLine("New numbers\nX: {0}, Y:{1}", one, two);
+        }
+        static void changing_no_temp()
+        {
+            int one = 0, two = 0;
+            Console.WriteLine("Input of numbers\nX: ");
+            one = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Y: ");
+            two = Convert.ToInt32(Console.ReadLine());
+            one += two;
+            two = one - two;
+            one -= two;
+            Console.WriteLine("New numbers\nX: {0}, Y:{1}", one, two);
+        }
+        static void Anketa2(string f_name, string l_name)
+        {
+            if (String.IsNullOrEmpty(f_name)==true || String.IsNullOrEmpty(l_name) == true)
             {
-                sum += bottom;
-                Sum(bottom + 1, top, sum);
+                Console.WriteLine("Привет! Ваше имя: ");
+                f_name = Console.ReadLine();
+                Console.WriteLine("Фамилия:");
+                l_name = Console.ReadLine();
             }
-            return sum;
-        }
-        static void Recursive_output(int key)
-        {
-            Console.Write("The lower limit of list: ");
-            int lower_limit = Convert.ToInt32(Console.ReadLine());
-            Console.Write("The upper limit of list: ");
-            int upper_limit = Convert.ToInt32(Console.ReadLine());
-            if (key == 1)
-                Output(lower_limit, upper_limit);
             else
             {
-                Console.Write("The sum of ");
-                Output(lower_limit, upper_limit);
-                Console.Write($" is : {Sum(lower_limit, upper_limit, 0)}");
+                Console.WriteLine("Я правильно помню, что вас зовут {0} {1}? (Да/Нет)", l_name, f_name);
+                if(Console.ReadLine()=="Нет")
+                {
+                    Console.WriteLine("Ваше имя: ");
+                    f_name = Console.ReadLine();
+                    Console.WriteLine("Фамилия:");
+                    l_name = Console.ReadLine();
+                }
             }
+            Console.WriteLine("Город: ");
+            string sity = Console.ReadLine();
+            string answer = $"Имя:{f_name} Фамилия: {l_name} Город: {sity}";
+            Console.WriteLine("Вывести в центре?(Да/Нет)");
 
-
-
+            if (Console.ReadLine() == "Да")
+                Print(answer);
+            else
+                Console.WriteLine(answer);
 
         }
+        static void Pause()
+        {
+            Console.ReadKey();
+        }
+        static void Print(string msg)
+        {
+            Console.Clear();
+            int X = Console.WindowWidth/2 - msg.Length/2;
+            int Y = Console.WindowHeight/2 - 1;
+            Console.SetCursorPosition(X, Y);
+            Console.Write(msg);
+        }
+
         static void Main(string[] args)
         {
-            Console.WriteLine("The second homewor in geekbrains");
+            Console.WriteLine("The first homewort in geekbrains");
+            double height = 0, weight = 0;
+            string f_name="", l_name="";
             int number = 1;
-            
             while (number > 0 || number < 5)
             {
-                try { 
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\n1) find min\n2) Length of numbers\n3) Sum of odd & positive until zero\n4) Authorisation\n5) IMB\n6) The search of good numbers\n7) Recursive output\n8) Recursive sum\n9) Exit\n");
+                Console.ForegroundColor=ConsoleColor.Red;
+                Console.WriteLine("\n1-anketa, 2-IMT, 3-distance, 4-change, 5-change_no_temp, 6-anketa №2");
                 Console.ForegroundColor = ConsoleColor.White;
                 number = Convert.ToInt32(Console.ReadLine());
 
-                    switch (number)
-                    {
-                        case 1:
-                            //метод возвращающий минимальное из трех чисел;
-                            Console.WriteLine("\nThe minimal number is: " + Find_Min(InputOfArray()));
-                            break;
-                        case 2:
-                            //Написать метод подсчета количества цифр числа;
-                            Console.WriteLine("The Length of your number is:" + Length_Of_Number());
-                            break;
-                        case 3:
-                            //С клавиатуры вводятся числа, пока не будет введен 0. Подсчитать сумму всех нечетных положительных чисел;
-                            Console.WriteLine(Input_While_Not_Zero());
-                            break;
-                        case 4:
-                            //Реализовать метод проверки логина и пароля.
-                            Authorisation();
-                            break;
-                        case 5:
-                            //индекс массы
-                            Chack_IMT();
-                            break;
-                        case 6:
-                            //программa подсчета количества “Хороших” чисел в диапазоне от 1 до 1 000 000
-                            Good_Numbers_From_Million();
-                            break;
-                        case 7:
-                            Recursive_output(1);
-                            break;
-                        case 8:
-                            Recursive_output(2);
-                            break;
-                        default:
-
-                            Console.WriteLine("Have a nice day!");//TASK_6
-                                                                 //Pause();
-                            Environment.Exit(0);
-                            break;
-
-                    }
-                    
-
-                }
-                catch
+                switch (number)
                 {
-                    Console.WriteLine("Input some number in {1...6}");//TASK_6
-                                              
+                    case 1:
+                        Anketa_vvod(out height, out weight, out f_name, out l_name); //TASK_1
+                        break;
+                    case 2:
+                        Console.WriteLine("IMT+ " + IMT(height, weight) + ""); //TASK_2
+                        break;
+                    case 3:
+                        Console.WriteLine("The distance:{0}", dist());//TASK_3
+                        break;
+                    case 4:
+                        changing();//TASK_4
+                        break;
+                    case 5:
+                        changing_no_temp();//TASK_4*
+                        break;
+                    case 6:
+                        Anketa2(f_name, l_name);//TASK_5
+                        break;
+                    default:
+                        Console.WriteLine("Have a nice day!");//TASK_6
+                        Pause();
+                        Environment.Exit(0);
+                        break;
+
+
+
                 }
             }
+
         }
     }
 }
