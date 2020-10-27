@@ -24,7 +24,7 @@ using System.Linq.Expressions;
 */
 namespace Homework2
 {
-    class Program
+    class Work_on_bugs
     {
         static int [] InputOfArray()
         {
@@ -55,6 +55,31 @@ namespace Homework2
             }
             return min;
         }
+        static int Length_Of_Number1()
+        {
+            Console.WriteLine("Input your number");
+            string num = Console.ReadLine();
+            int count = 0;
+            double var;
+            try
+            {
+                if ((var = Convert.ToDouble(num)) != 0)
+                {
+                    while (var % 1 != 0)
+                        var *= 10;
+                    while (var != 0)
+                    {
+                        count++;
+                        var =Convert.ToInt32(var/ 10);
+                    }
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Are you not wrong?");
+            }
+            return count;
+        }
         static int Length_Of_Number()
         {
             Console.WriteLine("Input your number");
@@ -66,7 +91,7 @@ namespace Homework2
                 {
                     foreach (char i in num)
                 
-                        if (i!=',')
+                        if (i!=',' || i != '.')
                             count++;
                 }
             }
@@ -214,33 +239,34 @@ namespace Homework2
                 if (bottom+1 <=top)
                     Output(bottom + 1, top);
         }
-        static int Sum(int bottom, int top, int sum)
+        static int Sum(int bottom, int top)
         {
             if (bottom + 1 <= top)
             {
-                sum += bottom;
-                Sum(bottom + 1, top, sum);
+                return bottom+ Sum(bottom + 1, top);
             }
-            return sum;
+            return -1;
         }
         static void Recursive_output(int key)
         {
+
             Console.Write("The lower limit of list: ");
             int lower_limit = Convert.ToInt32(Console.ReadLine());
             Console.Write("The upper limit of list: ");
             int upper_limit = Convert.ToInt32(Console.ReadLine());
-            if (key == 1)
-                Output(lower_limit, upper_limit);
-            else
+            if (lower_limit < upper_limit)
             {
-                Console.Write("The sum of ");
-                Output(lower_limit, upper_limit);
-                Console.Write($" is : {Sum(lower_limit, upper_limit, 0)}");
+                if (key == 1)
+                    Output(lower_limit, upper_limit);
+                else
+                {
+                    Console.Write("The sum of ");
+                    Output(lower_limit, upper_limit);
+                    Console.Write($" is : {Sum(lower_limit, upper_limit)}");
+                }
             }
-
-
-
-
+            else
+                Console.WriteLine("Wrong borders");
         }
         static void Main(string[] args)
         {
@@ -251,7 +277,7 @@ namespace Homework2
             {
                 try { 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\n1) find min\n2) Length of numbers\n3) Sum of odd & positive until zero\n4) Authorisation\n5) IMB\n6) The search of good numbers\n7) Recursive output\n8) Recursive sum\n9) Exit\n");
+                Console.WriteLine("\n1) find min\n2) Length of numbers\n3) Sum of odd & positive until zero\n4) Authorisation\n5) IMB\n6) The search of good numbers\n7) Recursive output\n8) Recursive sum\n9) Length of numbers(other way)\n10) Exit\n");
                 Console.ForegroundColor = ConsoleColor.White;
                 number = Convert.ToInt32(Console.ReadLine());
 
@@ -287,6 +313,10 @@ namespace Homework2
                         case 8:
                             Recursive_output(2);
                             break;
+                        case 9:
+                            Console.WriteLine("The Length of your number is:" + Length_Of_Number1());
+                            break;
+
                         default:
 
                             Console.WriteLine("Have a nice day!");//TASK_6
